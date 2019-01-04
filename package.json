@@ -1,7 +1,7 @@
 {
-  "name": "lamassu-camera-wrapper",
+  "name": "@lamassu/camera-wrapper",
   "license": "Unlicense",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A face detection library for node.js using OpenCV",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,18 @@
   },
   "devDependencies": {
     "tape": "^4.9.1"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafaelTaranto/lamassu-camera-wrapper.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/RafaelTaranto/lamassu-camera-wrapper/issues"
+  },
+  "homepage": "https://github.com/RafaelTaranto/lamassu-camera-wrapper#readme"
 }
