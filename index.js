@@ -9,7 +9,7 @@ var fs = require('fs')
  * @property {boolean} debug - Indicates whether or not the debugging messages are displayed
  * @property {boolean} verbose - Indicates whether or not the native process debugging messages are displayed
  *
- * @property {number|string} device - Camera device to open (example: 0, '/dev/video0')
+ * @property {number} device - Camera device to open (example: 0 if you want to open '/dev/video0')
  * @property {number} width - Image width
  * @property {number} height - Image height
  * @property {string} codec - Image format (only .jpg supported for now)
@@ -128,6 +128,16 @@ exports.config = function (config) {
   if (!_.isEmpty(config)) {
     _opts = _.extendAll({}, defaultOpts, config)
     debug('config with opts', _opts)
+  }
+
+  if (_opts.device) {
+    try {
+      const device = fs.realpathSync(_opts.device)
+      const match = device.match(/\/dev\/video(\d)/)
+      _opts.device = parseInt(match[1])
+    } catch (err) {
+      console.log('device not resolving to /dev/video(index)')
+    }
   }
 
   return _.cloneDeep(_opts)

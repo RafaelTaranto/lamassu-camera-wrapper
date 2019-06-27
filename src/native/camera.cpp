@@ -55,16 +55,13 @@ void startCapture(const FunctionCallbackInfo<Value>& args) {
     }
 
     // accept opts { device : string|number }
-    Local<Value> input = Number::New(isolate, 0);
     if (params->Has(String::NewFromUtf8(isolate, "device"))) {
-        Local<Value> input = params->Get(String::NewFromUtf8(isolate, "device"));
-        //if (!input->IsNumber()) {
-        bag->device = stringValue(input);
+        bag->device = params->Get(String::NewFromUtf8(isolate, "device"))->NumberValue();
     } else {
-        bag->device = std::string("");
+        bag->device = 0;
     }
     if (bag->verbose) {
-        printf("camera :: opts { device : %s }\n", bag->device.c_str());
+        printf("camera :: opts { device : %d }\n", bag->device);
     }
 
     // accept opts { width : number, height : number }
@@ -172,16 +169,12 @@ void startCapture(const FunctionCallbackInfo<Value>& args) {
 
     // Initiate OpenCV camera
     if (bag->verbose) {
-        printf("camera :: starting opencv VideoCapture %s\n", bag->device.c_str());
+        printf("camera :: starting opencv VideoCapture %d\n", bag->device);
     }
 
     bag->capture = new cv::VideoCapture();
     bool opened = false;
-    if (input->IsNumber()) {
-        opened = bag->capture->open((int) input->Int32Value());
-    } else if (!bag->device.empty()) {
-        opened = bag->capture->open(bag->device);
-    }
+    opened = bag->capture->open(bag->device);
 
     if (bag->verbose) {
         printf("camera :: VideoCapture opened %d\n", opened);

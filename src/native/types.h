@@ -56,7 +56,7 @@ struct TMessage {
     bool verbose;
 
     // device - Camera device to open (example: 0, '/dev/video0')
-    std::string device;
+    int device;
 
     // camera frame size
     int32_t width, height;
